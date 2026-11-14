@@ -1,10 +1,18 @@
 import React, { useEffect, useRef } from 'react';
 import { useStore } from '../../store/useStore';
 
+interface Particle {
+  x: number; y: number;
+  vx: number; vy: number;
+  alpha: number; color: string; r: number;
+}
+
 export default function Fireworks({ active }: { active: boolean }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { qualityMode } = useStore();
-  const rafRef = useRef<number>(0);
+  const rafRef    = useRef<number>(0);
+  const particles = useRef<Particle[]>([]);
+  const burstsDone = useRef(0);
 
   useEffect(() => {
     if (!active || qualityMode === 'battery') return;
@@ -13,71 +21,71 @@ export default function Fireworks({ active }: { active: boolean }) {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    canvas.width = window.innerWidth;
+    canvas.width  = window.innerWidth;
     canvas.height = window.innerHeight;
+    particles.current = [];
+    burstsDone.current = 0;
 
-    const count = qualityMode === 'high' ? 8 : 4;
-    const particles: any[] = [];
-
-    const colors = ['#f9cd05', '#ff6b35', '#ff3366', '#00d4ff', '#7c3aed', '#10b981'];
+    const COLORS   = ['#f9cd05','#ffb800','#ff6b35','#a855f7','#22c55e','#3b82f6','#ec4899','#fff'];
+    const COUNT    = qualityMode === 'high' ? 10 : 5;
+    const PER_BURST= qualityMode === 'high' ? 70 : 40;
 
     function burst(x: number, y: number) {
-      const color = colors[Math.floor(Math.random() * colors.length)];
-      for (let i = 0; i < (qualityMode === 'high' ? 60 : 30); i++) {
-        const angle = (Math.PI * 2 * i) / (qualityMode === 'high' ? 60 : 30);
-        const speed = 2 + Math.random() * 4;
-        particles.push({
+      const color = COLORS[Math.floor(Math.random() * COLORS.length)];
+      for (let i = 0; i < PER_BURST; i++) {
+        const angle = (Math.PI * 2 * i) / PER_BURST;
+        const speed = 1.5 + Math.random() * 4.5;
+        particles.current.push({
           x, y,
           vx: Math.cos(angle) * speed,
-          vy: Math.sin(angle) * speed - 1,
+          vy: Math.sin(angle) * speed - 1.5,
           alpha: 1,
           color,
-          r: 2 + Math.random() * 2
+          r: 1.5 + Math.random() * 2.5
         });
       }
     }
 
-    for (let i = 0; i < count; i++) {
+    // Schedule bursts
+    for (let i = 0; i < COUNT; i++) {
       setTimeout(() => {
         burst(
-          canvas.width * (0.1 + Math.random() * 0.8),
-          canvas.height * (0.1 + Math.random() * 0.5)
+          canvas.width  * (.1 + Math.random() * .8),
+          canvas.height * (.08 + Math.random() * .45)
         );
-      }, i * 400);
+      }, i * 380);
     }
 
     function animate() {
       ctx!.clearRect(0, 0, canvas!.width, canvas!.height);
-      for (let i = particles.length - 1; i >= 0; i--) {
-        const p = particles[i];
-        p.x += p.vx;
-        p.y += p.vy;
-        p.vy += 0.08;
-        p.alpha -= 0.015;
-        if (p.alpha <= 0) { particles.splice(i, 1); continue; }
+      for (let i = particles.current.length - 1; i >= 0; i--) {
+        const p = particles.current[i];
+        p.x  += p.vx;
+        p.y  += p.vy;
+        p.vy += 0.09; // gravity
+        p.alpha -= 0.014;
+        if (p.alpha <= 0) { particles.current.splice(i, 1); continue; }
         ctx!.globalAlpha = p.alpha;
-        ctx!.fillStyle = p.color;
+        ctx!.fillStyle   = p.color;
         ctx!.beginPath();
         ctx!.arc(p.x, p.y, p.r, 0, Math.PI * 2);
         ctx!.fill();
       }
       ctx!.globalAlpha = 1;
-      if (particles.length > 0) {
+      if (particles.current.length > 0) {
         rafRef.current = requestAnimationFrame(animate);
       }
     }
-    rafRef.current = requestAnimationFrame(animate);
 
+    rafRef.current = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(rafRef.current);
   }, [active, qualityMode]);
 
   if (!active || qualityMode === 'battery') return null;
 
   return (
-    <canvas
-      ref={canvasRef}
+    <canvas ref={canvasRef}
       className="fixed inset-0 pointer-events-none z-50"
-      style={{ mixBlendMode: 'screen' }}
-    />
+      style={{ mixBlendMode: 'screen' }} />
   );
 }
