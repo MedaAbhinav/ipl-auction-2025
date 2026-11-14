@@ -16,9 +16,26 @@ const server = http.createServer(app);
 
 const FRONTEND_URL = process.env.FRONTEND_URL || '*';
 
+// Accept all Vercel preview URLs + configured URL
+function corsOrigin(origin: string | undefined, callback: Function) {
+  const allowed = [
+    FRONTEND_URL,
+    'http://localhost:5173',
+    'http://localhost:4173',
+  ];
+  // Allow any vercel.app domain and any localhost
+  if (!origin || allowed.includes(origin) ||
+      origin.endsWith('.vercel.app') ||
+      origin.includes('localhost')) {
+    callback(null, true);
+  } else {
+    callback(null, true); // allow all in free tier
+  }
+}
+
 const io = new Server(server, {
   cors: {
-    origin: FRONTEND_URL,
+    origin: corsOrigin,
     methods: ['GET', 'POST'],
     credentials: true
   },
@@ -28,7 +45,7 @@ const io = new Server(server, {
 
 // ── Middleware ────────────────────────────────────────────────────────────────
 app.use(helmet({ contentSecurityPolicy: false }));
-app.use(cors({ origin: FRONTEND_URL, credentials: true }));
+app.use(cors({ origin: true, credentials: true }));
 app.use(express.json({ limit: '1mb' }));
 app.use(rateLimit({ windowMs: 60_000, max: 300, standardHeaders: true, legacyHeaders: false }));
 
