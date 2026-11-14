@@ -1,0 +1,114 @@
+const IPL_TEAMS = [
+  {
+    id: "CSK",
+    name: "Chennai Super Kings",
+    shortName: "CSK",
+    primaryColor: "#F9CD05",
+    secondaryColor: "#1A1A2E",
+    textColor: "#000000",
+    logo: "https://bcciplayerimages.s3.ap-south-1.amazonaws.com/ipl/CSK/logos/Roundbig/CSKroundbig.png",
+    homeGround: "MA Chidambaram Stadium, Chennai",
+    owner: "India Cements"
+  },
+  {
+    id: "MI",
+    name: "Mumbai Indians",
+    shortName: "MI",
+    primaryColor: "#004BA0",
+    secondaryColor: "#D1AB3E",
+    textColor: "#FFFFFF",
+    logo: "https://bcciplayerimages.s3.ap-south-1.amazonaws.com/ipl/MI/logos/Roundbig/MIroundbig.png",
+    homeGround: "Wankhede Stadium, Mumbai",
+    owner: "Reliance Industries"
+  },
+  {
+    id: "RCB",
+    name: "Royal Challengers Bengaluru",
+    shortName: "RCB",
+    primaryColor: "#EC1C24",
+    secondaryColor: "#000000",
+    textColor: "#FFFFFF",
+    logo: "https://bcciplayerimages.s3.ap-south-1.amazonaws.com/ipl/RCB/logos/Roundbig/RCBroundbig.png",
+    homeGround: "M. Chinnaswamy Stadium, Bengaluru",
+    owner: "United Spirits"
+  },
+  {
+    id: "KKR",
+    name: "Kolkata Knight Riders",
+    shortName: "KKR",
+    primaryColor: "#3A225D",
+    secondaryColor: "#F9CD05",
+    textColor: "#FFFFFF",
+    logo: "https://bcciplayerimages.s3.ap-south-1.amazonaws.com/ipl/KKR/logos/Roundbig/KKRroundbig.png",
+    homeGround: "Eden Gardens, Kolkata",
+    owner: "Red Chillies Entertainment"
+  },
+  {
+    id: "SRH",
+    name: "Sunrisers Hyderabad",
+    shortName: "SRH",
+    primaryColor: "#FF822A",
+    secondaryColor: "#000000",
+    textColor: "#FFFFFF",
+    logo: "https://bcciplayerimages.s3.ap-south-1.amazonaws.com/ipl/SRH/logos/Roundbig/SRHroundbig.png",
+    homeGround: "Rajiv Gandhi International Stadium, Hyderabad",
+    owner: "SunTV Network"
+  },
+  {
+    id: "RR",
+    name: "Rajasthan Royals",
+    shortName: "RR",
+    primaryColor: "#2D4D9B",
+    secondaryColor: "#E91E8C",
+    textColor: "#FFFFFF",
+    logo: "https://bcciplayerimages.s3.ap-south-1.amazonaws.com/ipl/RR/logos/Roundbig/RRroundbig.png",
+    homeGround: "Sawai Mansingh Stadium, Jaipur",
+    owner: "Emerging Media"
+  },
+  {
+    id: "DC",
+    name: "Delhi Capitals",
+    shortName: "DC",
+    primaryColor: "#17479E",
+    secondaryColor: "#EF1C25",
+    textColor: "#FFFFFF",
+    logo: "https://bcciplayerimages.s3.ap-south-1.amazonaws.com/ipl/DC/logos/Roundbig/DCroundbig.png",
+    homeGround: "Arun Jaitley Stadium, Delhi",
+    owner: "GMR Group & JSW Group"
+  },
+  {
+    id: "PBKS",
+    name: "Punjab Kings",
+    shortName: "PBKS",
+    primaryColor: "#ED1B24",
+    secondaryColor: "#A7A9AC",
+    textColor: "#FFFFFF",
+    logo: "https://bcciplayerimages.s3.ap-south-1.amazonaws.com/ipl/PBKS/logos/Roundbig/PBKSroundbig.png",
+    homeGround: "PCA IS Bindra Stadium, Mohali",
+    owner: "Mohit Burman & Ness Wadia"
+  },
+  {
+    id: "GT",
+    name: "Gujarat Titans",
+    shortName: "GT",
+    primaryColor: "#1C1C1C",
+    secondaryColor: "#1BBBCA",
+    textColor: "#FFFFFF",
+    logo: "https://bcciplayerimages.s3.ap-south-1.amazonaws.com/ipl/GT/logos/Roundbig/GTroundbig.png",
+    homeGround: "Narendra Modi Stadium, Ahmedabad",
+    owner: "CVC Capital Partners"
+  },
+  {
+    id: "LSG",
+    name: "Lucknow Super Giants",
+    shortName: "LSG",
+    primaryColor: "#A72056",
+    secondaryColor: "#FBCE17",
+    textColor: "#FFFFFF",
+    logo: "https://bcciplayerimages.s3.ap-south-1.amazonaws.com/ipl/LSG/logos/Roundbig/LSGroundbig.png",
+    homeGround: "BRSABV Ekana Cricket Stadium, Lucknow",
+    owner: "RPSG Group"
+  }
+];
+
+module.exports = { IPL_TEAMS };
